@@ -81,7 +81,8 @@ async function jasmine2(
     }) as Global.Global['fit'];
   }
 
-  jasmineAsyncInstall(globalConfig, environment.global);
+  // jasmineAsyncInstall(globalConfig, environment.global);
+  jasmineAsyncInstall(environment.global);
 
   installEach(environment);
 
@@ -89,6 +90,11 @@ async function jasmine2(
   environment.global.it.only = environment.global.fit;
   environment.global.it.todo = env.todo;
   environment.global.it.skip = environment.global.xit;
+  environment.global.fit.concurrent = environment.global.fitConcurrent;
+  environment.global.xit.concurrent = environment.global.xit;
+  environment.global.it.concurrent = environment.global.itConcurrent;
+  environment.global.it.concurrent.only = environment.global.fitConcurrent;
+  environment.global.it.concurrent.skip = environment.global.xit;
   environment.global.xtest = environment.global.xit;
   environment.global.describe.skip = environment.global.xdescribe;
   environment.global.describe.only = environment.global.fdescribe;
@@ -170,6 +176,7 @@ async function jasmine2(
   }
 
   runtime.requireModule(testPath);
+  //
   await env.execute();
 
   const results = await reporter.getResults();

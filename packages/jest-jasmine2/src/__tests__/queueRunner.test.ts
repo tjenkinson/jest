@@ -17,12 +17,16 @@ describe('queueRunner', () => {
       fail: () => {},
       onException: () => {},
       queueableFns: [
-        {
-          fn: fnOne,
-        },
-        {
-          fn: fnTwo,
-        },
+        [
+          {
+            fn: fnOne,
+          },
+        ],
+        [
+          {
+            fn: fnTwo,
+          },
+        ],
       ],
       setTimeout,
     };
@@ -41,12 +45,16 @@ describe('queueRunner', () => {
       fail,
       onException: () => {},
       queueableFns: [
-        {
-          fn: fnOne,
-        },
-        {
-          fn: fnTwo,
-        },
+        [
+          {
+            fn: fnOne,
+          },
+        ],
+        [
+          {
+            fn: fnTwo,
+          },
+        ],
       ],
       setTimeout,
     };
@@ -70,12 +78,16 @@ describe('queueRunner', () => {
       fail: () => {},
       onException,
       queueableFns: [
-        {
-          fn: fnOne,
-        },
-        {
-          fn: fnTwo,
-        },
+        [
+          {
+            fn: fnOne,
+          },
+        ],
+        [
+          {
+            fn: fnTwo,
+          },
+        ],
       ],
       setTimeout,
     };
@@ -96,14 +108,18 @@ describe('queueRunner', () => {
       fail: () => {},
       onException,
       queueableFns: [
-        {
-          fn: fnOne,
-          // It times out in zero seconds.
-          timeout: () => 0,
-        },
-        {
-          fn: fnTwo,
-        },
+        [
+          {
+            fn: fnOne,
+            // It times out in zero seconds.
+            timeout: () => 0,
+          },
+        ],
+        [
+          {
+            fn: fnTwo,
+          },
+        ],
       ],
       setTimeout,
     };
@@ -124,7 +140,7 @@ describe('queueRunner', () => {
     const options = {
       clearTimeout,
       fail: jest.fn(),
-      queueableFns: [{fn: failFn}],
+      queueableFns: [[{fn: failFn}]],
       setTimeout,
     };
     // @ts-ignore
@@ -143,12 +159,16 @@ describe('queueRunner', () => {
       fail,
       onException: () => {},
       queueableFns: [
-        {
-          fn: fnOne,
-        },
-        {
-          fn: fnTwo,
-        },
+        [
+          {
+            fn: fnOne,
+          },
+        ],
+        [
+          {
+            fn: fnTwo,
+          },
+        ],
       ],
       setTimeout,
     };

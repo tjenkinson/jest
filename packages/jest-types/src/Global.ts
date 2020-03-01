@@ -47,6 +47,10 @@ export interface ItConcurrentBase {
   (testName: string, testFn: () => Promise<any>, timeout?: number): void;
 }
 
+export interface XitConcurrentBase {
+  (testName: string, testFn: () => Promise<any>, timeout?: number): void;
+}
+
 export interface ItConcurrentExtended extends ItConcurrentBase {
   only: ItConcurrentBase;
   skip: ItConcurrentBase;
@@ -71,7 +75,7 @@ export interface GlobalAdditions {
   it: ItConcurrent;
   test: ItConcurrent;
   fit: ItBase & {concurrent?: ItConcurrentBase};
-  xit: ItBase;
+  xit: ItBase & {concurrent?: XitConcurrentBase};
   xtest: ItBase;
   describe: Describe;
   xdescribe: DescribeBase;

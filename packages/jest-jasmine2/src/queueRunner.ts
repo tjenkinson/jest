@@ -15,7 +15,7 @@ export type Options = {
   clearTimeout: Global['clearTimeout'];
   fail: (error: Error) => void;
   onException: (error: Error) => void;
-  queueableFns: Array<QueueableFn>;
+  queueableFns: Array<Array<QueueableFn>>;
   setTimeout: Global['setTimeout'];
   userContext: any;
 };
@@ -79,14 +79,21 @@ export default function queueRunner(options: Options) {
     );
   };
 
-  const result = options.queueableFns.reduce(
-    (promise, fn) => promise.then(() => mapper(fn)),
-    Promise.resolve(),
-  );
+  // this runs the queueable functions in order.
+  // Maybe can contain nested arrays that run in parallel?
+
+  let promise: Promise<void> = Promise.resolve();
+
+  options.queueableFns.forEach(concurrentGroup => {
+    promise = promise.then(() => {
+      const concurrentPromises = concurrentGroup.map(mapper);
+      return Promise.all(concurrentPromises).then(() => undefined);
+    });
+  });
 
   return {
     cancel: token.cancel.bind(token),
-    catch: result.catch.bind(result),
-    then: result.then.bind(result),
+    catch: promise.catch.bind(promise),
+    then: promise.then.bind(promise),
   };
 }

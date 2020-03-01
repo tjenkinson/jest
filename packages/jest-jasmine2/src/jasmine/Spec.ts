@@ -96,6 +96,7 @@ export default class Spec {
   markedTodo?: boolean;
   markedPending?: boolean;
   expand?: boolean;
+  markedConcurrent?: boolean;
 
   static pendingSpecExceptionMessage: string;
 
@@ -186,8 +187,11 @@ export default class Spec {
       return;
     }
 
+    // beforeEach, afterEach
     const fns = this.beforeAndAfterFns();
-    const allFns = fns.befores.concat(this.queueableFn).concat(fns.afters);
+    const allFns = [...fns.befores, this.queueableFn, ...fns.afters].map(a => [
+      a,
+    ]);
 
     this.currentRun = this.queueRunnerFactory({
       queueableFns: allFns,
@@ -257,6 +261,10 @@ export default class Spec {
 
   todo() {
     this.markedTodo = true;
+  }
+
+  concurrent() {
+    this.markedConcurrent = true;
   }
 
   getResult() {

@@ -10,14 +10,15 @@
  * returning a promise from `it/test` and `before/afterEach/All` blocks.
  */
 
-import {Config, Global} from '@jest/types';
+// import {Config, Global} from '@jest/types';
+import {Global} from '@jest/types';
 import co from 'co';
 import isGeneratorFn from 'is-generator-fn';
-import throat from 'throat';
+// import throat from 'throat';
 import isError from './isError';
 import {Jasmine} from './types';
-import Spec from './jasmine/Spec';
-import {QueueableFn} from './queueRunner';
+// import Spec from './jasmine/Spec';
+// import {QueueableFn} from './queueRunner';
 
 interface DoneFn {
   (): void;
@@ -141,62 +142,65 @@ function promisifyIt(
   };
 }
 
-function makeConcurrent(
-  originalFn: (
-    description: string,
-    fn: QueueableFn['fn'],
-    timeout?: number,
-  ) => Spec,
-  env: Jasmine['currentEnv_'],
-  mutex: ReturnType<typeof throat>,
-): Global.ItConcurrentBase {
-  return function(specName, fn, timeout) {
-    let promise: Promise<unknown> = Promise.resolve();
+// function makeConcurrent(
+//   originalFn: (
+//     description: string,
+//     fn: QueueableFn['fn'],
+//     timeout?: number,
+//   ) => Spec,
+//   env: Jasmine['currentEnv_'],
+//   mutex: ReturnType<typeof throat>,
+// ): Global.ItConcurrentBase {
+//   return function(specName, fn, timeout) {
+//     let promise: Promise<unknown> = Promise.resolve();
 
-    const spec = originalFn.call(env, specName, () => promise, timeout);
-    if (env != null && !env.specFilter(spec)) {
-      return spec;
-    }
+//     const spec = originalFn.call(env, specName, () => promise, timeout);
+//     if (env != null && !env.specFilter(spec)) {
+//       return spec;
+//     }
 
-    try {
-      promise = mutex(() => {
-        const promise = fn();
-        if (isPromise(promise)) {
-          return promise;
-        }
-        throw new Error(
-          `Jest: concurrent test "${spec.getFullName()}" must return a Promise.`,
-        );
-      });
-    } catch (error) {
-      promise = Promise.reject(error);
-    }
+//     try {
+//       promise = mutex(() => {
+//         // TODO beforeEach won't have run yet
+//         const promise = fn();
+//         if (isPromise(promise)) {
+//           return promise;
+//         }
+//         throw new Error(
+//           `Jest: concurrent test "${spec.getFullName()}" must return a Promise.`,
+//         );
+//       });
+//     } catch (error) {
+//       promise = Promise.reject(error);
+//     }
 
-    return spec;
-  };
-}
+//     return spec;
+//   };
+// }
 
 export default function jasmineAsyncInstall(
-  globalConfig: Config.GlobalConfig,
+  // globalConfig: Config.GlobalConfig,
   global: Global.Global,
 ): void {
   const jasmine = global.jasmine as Jasmine;
-  const mutex = throat(globalConfig.maxConcurrency);
+  // const mutex = throat(globalConfig.maxConcurrency);
 
   const env = jasmine.getEnv();
   env.it = promisifyIt(env.it, env, jasmine);
   env.fit = promisifyIt(env.fit, env, jasmine);
-  global.it.concurrent = (env => {
-    const concurrent = makeConcurrent(
-      env.it,
-      env,
-      mutex,
-    ) as Global.ItConcurrentExtended;
-    concurrent.only = makeConcurrent(env.fit, env, mutex);
-    concurrent.skip = makeConcurrent(env.xit, env, mutex);
-    return concurrent;
-  })(env);
-  global.fit.concurrent = makeConcurrent(env.fit, env, mutex);
+  env.itConcurrent = promisifyIt(env.itConcurrent, env, jasmine);
+  env.fitConcurrent = promisifyIt(env.fitConcurrent, env, jasmine);
+  // global.it.concurrent = (env => {
+  //   const concurrent = makeConcurrent(
+  //     env.it,
+  //     env,
+  //     mutex,
+  //   ) as Global.ItConcurrentExtended;
+  //   concurrent.only = makeConcurrent(env.fit, env, mutex);
+  //   concurrent.skip = makeConcurrent(env.xit, env, mutex);
+  //   return concurrent;
+  // })(env);
+  // global.fit.concurrent = makeConcurrent(env.fit, env, mutex);
   env.afterAll = promisifyLifeCycleFunction(env.afterAll, env);
   env.afterEach = promisifyLifeCycleFunction(env.afterEach, env);
   env.beforeAll = promisifyLifeCycleFunction(env.beforeAll, env);

@@ -78,6 +78,16 @@ export default function(j$: Jasmine) {
     clearReporters: () => void;
     addReporter: (reporterToAdd: Reporter) => void;
     it: (description: string, fn: QueueableFn['fn'], timeout?: number) => Spec;
+    itConcurrent: (
+      description: string,
+      fn: QueueableFn['fn'],
+      timeout?: number,
+    ) => Spec;
+    fitConcurrent: (
+      description: string,
+      fn: QueueableFn['fn'],
+      timeout?: number,
+    ) => Spec;
     xdescribe: (description: string, specDefinitions: Function) => Suite;
     xit: (description: string, fn: QueueableFn['fn'], timeout?: number) => Spec;
     beforeAll: (beforeAllFunction: QueueableFn['fn'], timeout?: number) => void;
@@ -577,6 +587,12 @@ export default function(j$: Jasmine) {
         return spec;
       };
 
+      this.itConcurrent = function(...args) {
+        const spec = this.it.apply(this, args);
+        spec.concurrent();
+        return spec;
+      };
+
       this.xit = function(...args) {
         const spec = this.it.apply(this, args);
         spec.pend('Temporarily disabled with xit');
@@ -603,12 +619,28 @@ export default function(j$: Jasmine) {
       };
 
       this.fit = function(description, fn, timeout) {
+        // TODO doesn't have checks `it` does
         const spec = specFactory(
           description,
           fn,
           currentDeclarationSuite,
           timeout,
         );
+        currentDeclarationSuite.addChild(spec);
+        focusedRunnables.push(spec.id);
+        unfocusAncestor();
+        return spec;
+      };
+
+      this.fitConcurrent = function(description, fn, timeout) {
+        // TODO doesn't have checks `it` does
+        const spec = specFactory(
+          description,
+          fn,
+          currentDeclarationSuite,
+          timeout,
+        );
+        spec.concurrent();
         currentDeclarationSuite.addChild(spec);
         focusedRunnables.push(spec.id);
         unfocusAncestor();

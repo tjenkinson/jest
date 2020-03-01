@@ -70,9 +70,11 @@ export default class Suite {
   markedPending: boolean;
   markedTodo: boolean;
   isFocused: boolean;
+  markedConcurrent: boolean;
 
   constructor(attrs: Attributes) {
     this.markedPending = false;
+    this.markedConcurrent = false;
     this.markedTodo = false;
     this.isFocused = false;
     this.id = attrs.id;
