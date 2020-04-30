@@ -23,7 +23,8 @@
     "make-dir": "^3.0.0",
     "natural-compare": "^1.4.0",
     "pretty-format": "^25.1.0",
-    "semver": "^6.3.0"
+    "semver": "^6.3.0",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "@babel/traverse": "^7.3.4",
@@ -40,5 +41,10 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "170eee11d03b0ed5c60077982fdbc3bafd403638"
+  "gitHead": "170eee11d03b0ed5c60077982fdbc3bafd403638",
+  "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "snyk": true
 }
