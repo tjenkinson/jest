@@ -17,7 +17,8 @@
     "babel-plugin-istanbul": "^6.0.0",
     "babel-preset-jest": "^25.1.0",
     "chalk": "^3.0.0",
-    "slash": "^3.0.0"
+    "slash": "^3.0.0",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "@babel/core": "^7.1.0"
@@ -31,5 +32,10 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "170eee11d03b0ed5c60077982fdbc3bafd403638"
+  "gitHead": "170eee11d03b0ed5c60077982fdbc3bafd403638",
+  "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "snyk": true
 }
