@@ -13,7 +13,8 @@
     "@jest/test-result": "^25.1.0",
     "jest-haste-map": "^25.1.0",
     "jest-runner": "^25.1.0",
-    "jest-runtime": "^25.1.0"
+    "jest-runtime": "^25.1.0",
+    "snyk": "^1.316.1"
   },
   "engines": {
     "node": ">= 8.3"
@@ -21,5 +22,10 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "170eee11d03b0ed5c60077982fdbc3bafd403638"
+  "gitHead": "170eee11d03b0ed5c60077982fdbc3bafd403638",
+  "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "snyk": true
 }
