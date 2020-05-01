@@ -4,11 +4,14 @@
   "private": true,
   "scripts": {
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "react": "16.9.0",
-    "react-native": "0.61.5"
+    "react-native": "0.61.5",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "@babel/core": "*",
@@ -17,5 +20,6 @@
     "jest": "*",
     "metro-react-native-babel-preset": "*",
     "react-test-renderer": "16.9.0"
-  }
+  },
+  "snyk": true
 }
