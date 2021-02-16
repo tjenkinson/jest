@@ -6,7 +6,7 @@
     "testEnvironment": "node"
   },
   "dependencies": {
-    "handlebars": "^4.7.3",
+    "handlebars": "^4.7.7",
     "source-map": "^0.6.1"
   }
 }
