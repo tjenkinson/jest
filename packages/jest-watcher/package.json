@@ -9,7 +9,7 @@
     "ansi-escapes": "^4.2.1",
     "chalk": "^3.0.0",
     "jest-util": "^25.1.0",
-    "string-length": "^3.1.0"
+    "string-length": "^5.0.0"
   },
   "devDependencies": {
     "@types/node": "*"
