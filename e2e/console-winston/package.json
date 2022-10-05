@@ -4,6 +4,12 @@
     "verbose": false
   },
   "dependencies": {
-    "winston": "^3.2.1"
-  }
+    "winston": "^3.2.1",
+    "@snyk/protect": "latest"
+  },
+  "scripts": {
+    "prepare": "yarn run snyk-protect",
+    "snyk-protect": "snyk-protect"
+  },
+  "snyk": true
 }
