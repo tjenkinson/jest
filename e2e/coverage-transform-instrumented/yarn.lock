@@ -665,6 +665,11 @@
   resolved "https://registry.yarnpkg.com/@istanbuljs/schema/-/schema-0.1.2.tgz#26520bf09abe4a5644cd5414e37125a8954241dd"
   integrity sha512-tsAQNx32a8CoFhjhijUIhI4kccIAgmGhy8LZMZgGfmXcpMbPRUqn5LWmgRttILi6yeGmBJd2xsPkFMs0PzgPCw==
 
+"@snyk/protect@^1.1025.0":
+  version "1.1025.0"
+  resolved "https://registry.yarnpkg.com/@snyk/protect/-/protect-1.1025.0.tgz#85ece8c6ab49cd9409fd8082f6d21f6c613d479d"
+  integrity sha512-RK9tY2Aqujv5l9e/5nE4yiTilk8vxyB99VtJJ/6p9TZYhddCVQUUv+PNenhVVO3jkSD8/3gLWbPakIvQsFKynA==
+
 ansi-styles@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-3.2.1.tgz#41fbb20243e50b12be0f04b8dedbf07520ce841d"
