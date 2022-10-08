@@ -3,10 +3,16 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-typescript": "^7.0.0",
-    "react": "*"
+    "react": "*",
+    "@snyk/protect": "latest"
   },
   "jest": {
     "automock": true,
     "testEnvironment": "node"
-  }
+  },
+  "scripts": {
+    "prepare": "yarn run snyk-protect",
+    "snyk-protect": "snyk-protect"
+  },
+  "snyk": true
 }
