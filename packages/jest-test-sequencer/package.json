@@ -11,7 +11,7 @@
   "types": "build/index.d.ts",
   "dependencies": {
     "@jest/test-result": "^25.1.0",
-    "jest-haste-map": "^25.1.0",
+    "jest-haste-map": "^29.4.2",
     "jest-runner": "^25.1.0",
     "jest-runtime": "^25.1.0"
   },
